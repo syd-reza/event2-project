@@ -16,38 +16,21 @@ export default function Skanchat() {
       id: 2,
       titel: "چگونه از مجاز بودن یک اقامتگاه در قم مطمئن شویم؟",
       answer:
-        "اقامتگاه‌های مجاز دارای مجوز رسمی از اداره میراث فرهنگی و گردشگری هستند. همچنین می‌توان از طریق سامانه‌های رسمی رزرو یا استعلام از شهرداری و اتحادیه هتل‌داران وضعیت مجوز را بررسی کرد.",
+        "اقامتگاه‌های مجاز دارای مجوز رسمی از اداره میراث فرهنگی و گردشگری هستند.",
     },
     {
       id: 3,
       titel: "در صورت مشاهده منازل غیرمجاز برای اسکان زائران چه باید کرد؟",
       answer:
-        "در صورت مشاهده موارد غیرمجاز می‌توان موضوع را از طریق سامانه ۱۳۷ شهرداری قم یا پلیس اماکن گزارش داد تا بررسی و برخورد قانونی انجام شود.",
-    },
-    {
-      id: 4,
-      titel: "آیا اتباع خارجی برای اجاره منزل در قم نیاز به مدارک خاصی دارند؟",
-      answer:
-        "اتباع خارجی باید دارای اقامت معتبر، کارت آمایش یا گذرنامه دارای ویزای معتبر باشند و قرارداد اجاره نیز باید به صورت رسمی و ثبت‌شده تنظیم شود.",
-    },
-    {
-      id: 5,
-      titel: "نرخ اجاره اسکان در ایام پیک زیارتی چگونه تعیین می‌شود؟",
-      answer:
-        "در ایام پرتردد مانند نیمه شعبان و مناسبت‌های مذهبی، نرخ‌ها طبق دستورالعمل‌های نظارتی تعیین می‌شود و دریافت مبالغ خارج از چارچوب مصوب تخلف محسوب می‌گردد.",
-    },
-    {
-      id: 6,
-      titel: "در صورت بروز مشکل در محل اقامت (قطعی آب، برق یا مسائل ایمنی) چه اقدامی انجام دهیم؟",
-      answer:
-        "ابتدا موضوع را با مدیریت اقامتگاه مطرح کنید. در صورت عدم رسیدگی، می‌توان از طریق سامانه ۱۳۷ شهرداری یا شماره‌های اضطراری مرتبط پیگیری کرد.",
+        "موضوع را از طریق سامانه ۱۳۷ شهرداری قم یا پلیس اماکن گزارش دهید.",
     },
   ]);
-  
 
   const [messages, setMessages] = useState<
     { role: "user" | "bot"; text: string }[]
   >([]);
+
+  const [inputValue, setInputValue] = useState("");
 
   const typeAnswer = (fullText: string) => {
     let index = 0;
@@ -71,17 +54,78 @@ export default function Skanchat() {
     }, 25);
   };
 
-  const handleClick = (item: any) => {
+  const handleClick = async (item: any) => {
     // اضافه کردن سوال کاربر
     setMessages((prev) => [...prev, { role: "user", text: item.titel }]);
 
     // حذف سوال از لیست
     setSlides((prev) => prev.filter((slide) => slide.id !== item.id));
 
-    // تایپ شدن جواب
-    setTimeout(() => {
-      typeAnswer(item.answer);
-    }, 400);
+    // اگر FAQ جواب دارد، مستقیم تایپ کن
+    if (item.answer) {
+      setTimeout(() => typeAnswer(item.answer), 300);
+      return;
+    }
+
+    // در غیر این صورت، سوال را به OpenRouter بفرست
+    await askOpenRouter(item.titel);
+  };
+
+  const handleSendInput = async () => {
+    if (!inputValue.trim()) return;
+
+    // اضافه کردن سوال کاربر
+    setMessages((prev) => [...prev, { role: "user", text: inputValue }]);
+    const question = inputValue;
+    setInputValue("");
+
+    // بررسی FAQ
+    const foundFAQ = slides.find((slide) => slide.titel === question);
+    if (foundFAQ) {
+      typeAnswer(foundFAQ.answer);
+      setSlides((prev) => prev.filter((s) => s.id !== foundFAQ.id));
+      return;
+    }
+
+    // ارسال به API
+    await askOpenRouter(question);
+  };
+
+  const askOpenRouter = async (question: string) => {
+    try {
+      const response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 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",
+          },
+          body: JSON.stringify({
+            model: "openai/gpt-4o-mini",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "تو یک چت‌بات فارسی هستی و فقط درباره شهر قم، اسکان زائران و گردشگری پاسخ می‌دهی.",
+              },
+              ...messages.map((m) => ({
+                role: m.role === "user" ? "user" : "assistant",
+                content: m.text,
+              })),
+              { role: "user", content: question },
+            ],
+          }),
+        }
+      );
+
+      const data = await response.json();
+      const aiReply = data.choices?.[0]?.message?.content || "بدون پاسخ";
+      typeAnswer(aiReply);
+    } catch (err) {
+      console.error(err);
+      typeAnswer("❌ خطا در اتصال به سرور");
+    }
   };
 
   return (
@@ -97,7 +141,6 @@ export default function Skanchat() {
       </div>
 
       <div className="container mt-4">
-
         {/* پیام‌ها */}
         <div className="space-y-4 mb-8">
           {messages.map((msg, index) => (
@@ -139,13 +182,19 @@ export default function Skanchat() {
       {/* اینپوت پایین */}
       <div className="container fixed inset-x-0 bottom-4 w-full z-50">
         <div className="flex gap-2 items-center rounded-2xl p-2 shadow-[0px_0px_22.9px_0px_rgba(0,0,0,0.15)] bg-white">
-          <button className="bg-[#116EDB] p-2 rounded-lg">
+          <button
+            className="bg-[#116EDB] p-2 rounded-lg"
+            onClick={handleSendInput}
+          >
             <img src="/svg/send.svg" alt="icon" />
           </button>
           <input
             type="text"
             placeholder="شرح مسئله"
             className="bg-[#F9F9F9] p-2 rounded-lg w-full focus:outline-none"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSendInput()}
           />
         </div>
       </div>

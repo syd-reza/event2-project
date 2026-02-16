@@ -5,9 +5,7 @@ import Skanchat from "./skanchat/page";
 export default function Home() {
   return (
     <div >
-      {/* <LoginPage/> */}
-      <Homepage/>
-      {/* <Skanchat/> */}
+      <LoginPage/>
     </div>
   );
 }

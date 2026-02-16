@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [showForm, setShowForm] = useState(false);
@@ -20,7 +21,11 @@ export default function LoginPage() {
         }`}
       >
         <img src="/Frame 1394.png" alt="logo" />
-        <img src="/Frame.png" alt="mainpageimg" className="mb-5 mt-[38px] w-[200px]" />
+        <img
+          src="/Frame.png"
+          alt="mainpageimg"
+          className="mb-5 mt-[38px] w-[200px]"
+        />
 
         <p className="text-white text-justify leading-[180%] max-w-md">
           «دادرس» یک همراه هوشمند و مشاور حقوقی قابل‌اعتماد برای همه است. با این
@@ -73,7 +78,7 @@ export default function LoginPage() {
             </button>
 
             <button className="w-full bg-[#116EDB] text-white py-3 rounded-xl active:scale-[0.98] transition">
-              ورود
+              <Link href="/homepage">ورود</Link>
             </button>
           </div>
         )}
