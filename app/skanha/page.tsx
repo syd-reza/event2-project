@@ -1,45 +1,54 @@
+import Link from "next/link";
 import Pagetitel from "@/conponents/Pagetitel/Pagetitel";
 import Navbar from "@/conponents/Navbar/Navbar";
 
 export default function page() {
   const skanha = [
     {
+      id: "ali-test-1",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "علی علوی",
     },
     {
+      id: "ali-test-2",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "رضا صادقی",
     },
     {
+      id: "ali-test-3",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "علی علوی",
     },
     {
+      id: "ali-test-4",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "رضا صادقی",
     },
     {
+      id: "ali-test-5",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "رضا صادقی",
     },
     {
+      id: "ali-test-6",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "رضا صادقی",
     },
     {
+      id: "ali-test-7",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "رضا صادقی",
     },
 
     {
+      id: "ali-test-8",
       image: "/Frame 1418.png",
       des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
       title: "رضا صادقی",
@@ -60,8 +69,8 @@ export default function page() {
       </div>
 
       <div className="flex flex-col gap-3 divide-y divide-gray-300 mb-24">
-        {skanha.map((item, index) => (
-          <div key={index} className="flex gap-2 items-end pb-3">
+        {skanha.map((item) => (
+          <Link key={item.id} href={`/skanha/${item.id}`} className="flex gap-2 items-end pb-3">
             <div className="text-center">
               <div className="px-1 -rotate-5 bg-[#BACFF7] rounded-2xl">
                 <div className="rotate-5 bg-white text-center rounded-2xl">
@@ -85,7 +94,7 @@ export default function page() {
                 <img src="/svg/arrow-left2.svg" alt="icon" />
               </span>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <Navbar />

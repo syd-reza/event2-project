@@ -1,0 +1,58 @@
+export interface SkanType {
+    id: string;
+    image: string;
+    des: string;
+    title: string;
+  }
+  
+  export const skanha: SkanType[] = [
+    {
+      id: "ali-test-1",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
+      title: "علی علوی",
+    },
+    {
+      id: "ali-test-2",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان متولد ۱۳۶۷ دارای ۸ سال سابقه وکالت پایه یک دادگستری در موضوعات مختلف خصوصا جرایم راهنمایی و رانندگی، سرقت، ثبت اسناد و ... می باشد.",
+      title: "رضا صادقی",
+    },
+    {
+      id: "ali-test-3",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان ...",
+      title: "علی علوی",
+    },
+    {
+      id: "ali-test-4",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان ...",
+      title: "رضا صادقی",
+    },
+    {
+      id: "ali-test-5",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان ...",
+      title: "رضا صادقی",
+    },
+    {
+      id: "ali-test-6",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان ...",
+      title: "رضا صادقی",
+    },
+    {
+      id: "ali-test-7",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان ...",
+      title: "رضا صادقی",
+    },
+    {
+      id: "ali-test-8",
+      image: "/Frame 1418.png",
+      des: "آقای احسان پناهیان ...",
+      title: "رضا صادقی",
+    },
+  ];
+  
