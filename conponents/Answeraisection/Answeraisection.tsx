@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Answeraisection() {
+
   return (
     <div className="-rotate-3 bg-[#FFC436] rounded-2xl mt-7">
       <div className="flex items-center justify-between bg-gradient-to-b from-[#116EDB] to-[#093B75] text-white rotate-3 rounded-2xl p-4">
