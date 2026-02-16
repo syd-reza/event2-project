@@ -30,3 +30,20 @@ body {
   color: var(--foreground);
   font-family: 'vazir';
 }
+
+
+.backgrandai {
+  position: relative;
+  background-color: #116EDB;
+  z-index: 1;
+}
+
+.backgrandai::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('/svg/messages2-AI.svg') left center no-repeat;
+  background-size: contain;
+  opacity: 0.2;
+  z-index: -1;
+}
