@@ -1,18 +1,17 @@
 "use client";
+import { useState, useEffect } from "react";
 
-import { useEffect, useState } from "react";
+export default function OfflineNotice() {
+  const [isOffline, setIsOffline] = useState(false);
 
-export default function OfflineNotice({ children }: { children: React.ReactNode }) {
-  const [isOnline, setIsOnline] = useState(true);
+  const checkConnection = () => setIsOffline(!navigator.onLine);
 
   useEffect(() => {
-    // بررسی وضعیت اولیه
-    setIsOnline(navigator.onLine);
+    checkConnection();
 
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
 
-    // اضافه کردن listener برای تغییر لحظه‌ای اینترنت
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
 
@@ -23,15 +22,29 @@ export default function OfflineNotice({ children }: { children: React.ReactNode 
   }, []);
 
   return (
-    <div className="min-h-screen">
-      {!isOnline ? (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-red-100 text-red-800 p-4 text-center">
-          <h1 className="text-2xl font-bold mb-2">اتصال اینترنت شما قطع شد!</h1>
-          <p className="text-lg">لطفاً اتصال خود را بررسی کنید.</p>
+    <div
+      className={`fixed inset-0 bg-primary z-[99999] flex items-center justify-center text-white transition-opacity ${
+        isOffline ? "opacity-100" : "opacity-0 pointer-events-none"
+      }`}
+    >
+      <div className="text-center px-6 max-w-sm">
+        <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-white/10 flex items-center justify-center text-2xl">
+          📡
         </div>
-      ) : (
-        children
-      )}
+
+        <h2 className="text-lg font-medium mb-2">اتصال اینترنت برقرار نیست</h2>
+
+        <p className="text-sm text-white/70 mb-6">
+          لطفاً اتصال خود را بررسی کرده و دوباره تلاش کنید.
+        </p>
+
+        <button
+          onClick={checkConnection}
+          className="bg-white text-primary px-6 py-2 rounded-xl text-sm"
+        >
+          تلاش مجدد
+        </button>
+      </div>
     </div>
   );
 }

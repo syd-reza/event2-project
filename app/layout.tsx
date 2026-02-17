@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import OfflineNotice from "@/conponents/OfflineNotice/OfflineNotice";
 
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({
       <link rel="icon" href="logo-site.png" type="image/png"></link>
       <body>
         {children}
+        <OfflineNotice/>
       </body>
     </html>
   );
