@@ -1,77 +1,135 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
+interface FormData {
+  fullname: string;
+  phone: string;
+  password: string;
+  email: string;
+}
+
 export default function LoginPage() {
-  const [showForm, setShowForm] = useState(false);
-  const [isRegister, setIsRegister] = useState(false); 
-  const [formData, setFormData] = useState({ fullname: "", phone: "", password: "", email: "" });
   const router = useRouter();
 
-  const handleBackgroundClick = () => {
-    if (showForm) {
-      setShowForm(false);
-      setIsRegister(false);  
+  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [isRegister, setIsRegister] = useState(false);
+
+  const [formData, setFormData] = useState<FormData>({
+    fullname: "",
+    phone: "",
+    password: "",
+    email: "",
+  });
+
+  // ✅ جلوگیری از فلش خوردن هنگام ریدایرکت
+  useEffect(() => {
+    const loggedIn = localStorage.getItem("isLoggedIn");
+
+    if (loggedIn === "true") {
+      router.replace("/homepage");
+    } else {
+      setCheckingAuth(false);
     }
+  }, [router]);
+
+  // ✅ قفل کردن اسکرول وقتی فرم باز است
+  useEffect(() => {
+    if (showForm) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showForm]);
+
+  const resetForm = () => {
+    setFormData({
+      fullname: "",
+      phone: "",
+      password: "",
+      email: "",
+    });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // شماره همراه فقط اعداد و حداکثر 11 رقم
+
     if (name === "phone") {
       const numericValue = value.replace(/\D/g, "").slice(0, 11);
-      setFormData({ ...formData, [name]: numericValue });
+      setFormData((prev) => ({ ...prev, phone: numericValue }));
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleSubmit = () => {
-    // بررسی فیلدهای الزامی
+  const validateForm = (): boolean => {
     if (isRegister) {
       if (!formData.fullname || !formData.phone || !formData.password || !formData.email) {
         alert("لطفا تمام فیلدها را پر کنید!");
-        return;
+        return false;
       }
-      // اعتبارسنجی ایمیل
+
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         alert("لطفا یک ایمیل معتبر وارد کنید!");
-        return;
+        return false;
       }
     } else {
       if (!formData.phone || !formData.password) {
         alert("لطفا تمام فیلدها را پر کنید!");
-        return;
+        return false;
       }
     }
-    router.push("/homepage"); // هدایت به صفحه اصلی
+
+    return true;
   };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    localStorage.setItem("isLoggedIn", "true");
+    router.replace("/homepage");
+  };
+
+  // ✅ تا وقتی auth چک نشده، هیچ UI نمایش نده
+  if (checkingAuth) {
+    return (
+      <div className="min-h-dvh flex items-center justify-center bg-gradient-to-b from-[#116EDB] to-[#093B75]">
+        <span className="text-white text-lg">در حال بررسی...</span>
+      </div>
+    );
+  }
 
   return (
     <div
-      onClick={handleBackgroundClick}
+      onClick={() => {
+        if (showForm) {
+          setShowForm(false);
+          setIsRegister(false);
+          resetForm();
+        }
+      }}
       className="relative min-h-dvh w-full bg-gradient-to-b from-[#116EDB] to-[#093B75] flex flex-col"
     >
       {/* Main Content */}
-      <div
-        className={`flex-1 flex flex-col justify-center items-center text-center px-6 pt-8 pb-[120px] select-none ${
-          showForm ? "overflow-hidden" : "overflow-y-auto"
-        }`}
-      >
+      <div className="flex-1 flex flex-col justify-center items-center text-center px-6 pt-8 pb-[120px] select-none overflow-y-auto">
         <div className="flex items-center gap-2">
-          <img src="/Frame 1441.png" alt="mainpageimg" className="w-[60px]" />
+          <img src="/Frame 1441.png" alt="logo" className="w-[60px]" />
           <h3 className="text-white font-bold text-3xl">قم اسکان</h3>
         </div>
-        <div>
-          <img src="/mainimgvector.png" alt="mainpageimg" className="w-full" />
-        </div>
+
+        <img src="/mainimgvector.png" alt="main" className="w-full" />
 
         <p className="text-white text-justify leading-[180%] max-w-md">
-          سفر وقتی لذت‌بخشه که محل اسکان، امن و مطمئن باشه. اپلیکیشن ما به شما
-          کمک می‌کنه سریع و ساده، بهترین مکان‌های اسکان مسافران در شهر رو پیدا
-          کنید و با اطلاعات شفاف، موقعیت دقیق و انتخاب آگاهانه، سفرتون رو با
-          آرامش شروع کنید.
+          سفر وقتی لذت‌بخشه که محل اسکان، امن و مطمئن باشه...
         </p>
       </div>
 
@@ -80,7 +138,7 @@ export default function LoginPage() {
         onClick={(e) => e.stopPropagation()}
         className={`fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl transition-all duration-500 ${
           showForm
-            ? "translate-y-0 max-h-[85vh] py-6"
+            ? "translate-y-0 h-[85vh] py-6"
             : "translate-y-[calc(100%-80px)] h-[80px] py-5"
         }`}
       >
@@ -89,130 +147,79 @@ export default function LoginPage() {
             onClick={() => setShowForm(true)}
             className="cursor-pointer text-center"
           >
-            <h3 className="text-[#4B5675] font-medium">ورود به حساب کاربری</h3>
+            <h3 className="text-[#4B5675] font-medium">
+              ورود به حساب کاربری
+            </h3>
           </div>
         ) : (
-          <div className="px-6 overflow-y-hidden max-h-[75vh]">
-            {isRegister ? (
-              <>
-                <h2 className="text-[#4B5675] font-medium mb-6 text-center">
-                  ثبت نام
-                </h2>
+          <form onSubmit={handleSubmit} className="px-6">
+            <h2 className="text-[#4B5675] font-medium mb-6 text-center">
+              {isRegister ? "ثبت نام" : "ورود به حساب کاربری"}
+            </h2>
 
-                <label className="block text-right mb-2 font-medium text-[#252F4A]">
-                  نام و نام خانوادگی
-                </label>
+            {isRegister && (
+              <>
+                <label className="block text-right mb-2">نام و نام خانوادگی</label>
                 <input
                   type="text"
                   name="fullname"
                   value={formData.fullname}
                   onChange={handleChange}
-                  required
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 mb-4 text-right focus:outline-none focus:ring-2 focus:ring-[#116EDB]"
+                  className="w-full border rounded-xl px-4 py-3 mb-4 text-right"
                 />
 
-                <label className="block text-right mb-2 font-medium text-[#252F4A]">
-                  شماره همراه
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  maxLength={11}
-                  pattern="\d{10,11}"
-                  placeholder="مثال: 09123456789"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 mb-4 text-right focus:outline-none focus:ring-2 focus:ring-[#116EDB]"
-                />
-
-                <label className="block text-right mb-2 font-medium text-[#252F4A]">
-                  ایمیل
-                </label>
+                <label className="block text-right mb-2">ایمیل</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 mb-4 text-right focus:outline-none focus:ring-2 focus:ring-[#116EDB]"
+                  className="w-full border rounded-xl px-4 py-3 mb-4 text-right"
                 />
-
-                <label className="block text-right mb-2 font-medium text-[#252F4A]">
-                  رمز عبور
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 mb-5 text-right focus:outline-none focus:ring-2 focus:ring-[#116EDB]"
-                />
-
-                <button
-                  onClick={handleSubmit}
-                  className="w-full bg-[#116EDB] text-white py-3 rounded-xl active:scale-[0.98] transition"
-                >
-                  ثبت نام
-                </button>
-
-                <p
-                  onClick={() => setIsRegister(false)}
-                  className="mt-4 text-center text-[#3E97FF] cursor-pointer"
-                >
-                  قبلا حساب دارم، ورود
-                </p>
               </>
+            )}
+
+            <label className="block text-right mb-2">شماره همراه</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full border rounded-xl px-4 py-3 mb-4 text-right"
+            />
+
+            <label className="block text-right mb-2">رمز عبور</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full border rounded-xl px-4 py-3 mb-5 text-right"
+            />
+
+            {isRegister ? (
+              <button type="submit" className="w-full bg-[#116EDB] text-white py-3 rounded-xl">
+                ثبت نام
+              </button>
             ) : (
               <>
-                <h2 className="text-[#4B5675] font-medium mb-6 text-center">
-                  ورود به حساب کاربری
-                </h2>
-
-                <label className="block text-right mb-2 font-medium text-[#252F4A]">
-                  شماره همراه
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  maxLength={11}
-                  pattern="\d{10,11}"
-                  placeholder="مثال: 09123456789"
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 mb-4 text-right focus:outline-none focus:ring-2 focus:ring-[#116EDB]"
-                />
-
-                <label className="block text-right mb-2 font-medium text-[#252F4A]">
-                  رمز عبور
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full border border-gray-300 rounded-xl px-4 py-3 mb-5 text-right focus:outline-none focus:ring-2 focus:ring-[#116EDB]"
-                />
-
                 <button
-                  onClick={() => setIsRegister(true)}
+                  type="button"
+                  onClick={() => {
+                    setIsRegister(true);
+                    resetForm();
+                  }}
                   className="text-[#3E97FF] font-medium mb-3 block w-full"
                 >
                   ثبت نام
                 </button>
 
-                <button
-                  onClick={handleSubmit}
-                  className="w-full bg-[#116EDB] text-white py-3 rounded-xl active:scale-[0.98] transition"
-                >
+                <button type="submit" className="w-full bg-[#116EDB] text-white py-3 rounded-xl">
                   ورود
                 </button>
               </>
             )}
-          </div>
+          </form>
         )}
       </div>
     </div>

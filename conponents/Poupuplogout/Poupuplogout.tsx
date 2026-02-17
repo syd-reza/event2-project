@@ -1,12 +1,21 @@
 "use client";
-import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 interface PoupuplogoutProps {
   onClose: () => void;
 }
 
 export default function Poupuplogout({ onClose }: PoupuplogoutProps) {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // پاک کردن وضعیت لاگین
+    localStorage.removeItem("isLoggedIn");
+    onClose(); // بستن پاپ‌آپ
+    router.push("/login"); // هدایت به صفحه لاگین
+  };
+
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/40">
       <div
@@ -23,8 +32,11 @@ export default function Poupuplogout({ onClose }: PoupuplogoutProps) {
             انصراف
           </button>
 
-          <button className="flex-1 py-2 rounded-xl bg-red-500 text-white">
-            <Link href="/login">خروج</Link>
+          <button
+            onClick={handleLogout}
+            className="flex-1 py-2 rounded-xl bg-red-500 text-white"
+          >
+            خروج
           </button>
         </div>
       </div>
