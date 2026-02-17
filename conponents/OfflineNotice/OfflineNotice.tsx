@@ -23,7 +23,7 @@ export default function OfflineNotice() {
 
   return (
     <div
-      className={`fixed inset-0 bg-primary z-[99999] flex items-center justify-center text-white transition-opacity ${
+      className={`fixed inset-0 bg-primary z-[99999] bg-gradient-to-b from-[#116EDB] to-[#093B75] flex items-center justify-center text-white transition-opacity ${
         isOffline ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
@@ -40,7 +40,7 @@ export default function OfflineNotice() {
 
         <button
           onClick={checkConnection}
-          className="bg-white text-primary px-6 py-2 rounded-xl text-sm"
+          className="bg-white text-black px-6 py-2 rounded-xl text-sm"
         >
           تلاش مجدد
         </button>
