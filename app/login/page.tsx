@@ -24,16 +24,18 @@ export default function LoginPage() {
           <img src="/Frame 1441.png" alt="mainpageimg" className="w-[60px]" />
           <h3 className="text-white font-bold text-3xl">قم اسکان</h3>
         </div>
-        <img
-          src="/Frame.png"
-          alt="mainpageimg"
-          className="mb-5 mt-[38px] w-[200px]"
-        />
+        <div>
+          <img
+            src="/mainimgvector.png"
+            alt="mainpageimg"
+            className="w-full"
+          />
+        </div>
 
         <p className="text-white text-justify leading-[180%] max-w-md">
           سفر وقتی لذت‌بخشه که محل اسکان، امن و مطمئن باشه. اپلیکیشن ما به شما
           کمک می‌کنه سریع و ساده، بهترین مکان‌های اسکان مسافران در شهر رو پیدا
-          کنید و با اطلاعات شفاف، موقعیت دقیق و انتخاب آگاهانه،  سفرتون رو با
+          کنید و با اطلاعات شفاف، موقعیت دقیق و انتخاب آگاهانه، سفرتون رو با
           آرامش شروع کنید.
         </p>
       </div>
