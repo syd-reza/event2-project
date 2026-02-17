@@ -3,7 +3,7 @@ import React from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-
+import Link from "next/link";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -22,10 +22,12 @@ export default function Bestskan() {
           <img src="/svg/Vector.svg" alt="icon" />
           <h4>بهترین اسکان ها </h4>
         </div>
+        <Link href="/skanha">
         <span className="flex items-center gap-1 text-[#116EDB]">
           مشاهده همه
           <img src="/svg/arrow-left2.svg" alt="icon" />
         </span>
+        </Link>
       </div>
 
       <Swiper

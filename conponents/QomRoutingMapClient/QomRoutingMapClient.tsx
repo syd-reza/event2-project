@@ -71,7 +71,7 @@ export default function MasirPage() {
     navigator.geolocation.getCurrentPosition(
       (pos) => setUserPos([pos.coords.latitude, pos.coords.longitude]),
       (err) => {
-        setError("دسترسی به موقعیت مکانی شما داده نشده یا خطا رخ داده است.");
+        setError("دسترسی به موقعیت مکانی شما داده نشده لطفا بررسی کنید.");
         console.error(err);
       }
     );

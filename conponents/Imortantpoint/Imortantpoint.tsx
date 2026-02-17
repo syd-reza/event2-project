@@ -9,17 +9,13 @@ export default function Imortantpoint() {
             نکات مهم در مورد در مورد اسکان در
             <span className="text-white text-base font-bold">شهر قم</span>
           </p>
-          <p className="text-sm line-clamp-4 text-justify leading-[180%]">
+          <p className="text-sm text-justify leading-[180%]">
             برای اقامتی راحت در قم، به موقعیت مکانی اقامتگاه و دسترسی آن به حرم،
             حمل‌ونقل عمومی و خدمات شهری توجه کنید. در ایام شلوغ، رزرو زودهنگام
             باعث صرفه‌جویی در زمان و هزینه می‌شود. پیش از انتخاب، امکانات، ظرفیت
             و شرایط بهداشتی محل اسکان را بررسی کرده و به قوانین و فرهنگ محلی
             احترام بگذارید.
           </p>
-          <span className="text-sm flex items-center gap-1">
-            مطالعه بیشتر
-            <img src="/svg/arrow-left.svg" alt="icon" />
-          </span>
         </div>
       </div>
     </div>
