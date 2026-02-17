@@ -20,7 +20,10 @@ export default function LoginPage() {
           showForm ? "overflow-hidden" : "overflow-y-auto"
         }`}
       >
-        <img src="/Frame 1394.png" alt="logo" />
+        <div className="flex  items-center gap-2">
+          <img src="/Frame 1441.png" alt="mainpageimg" className="w-[60px]" />
+          <h3 className="text-white font-bold text-3xl">قم اسکان</h3>
+        </div>
         <img
           src="/Frame.png"
           alt="mainpageimg"
@@ -28,10 +31,10 @@ export default function LoginPage() {
         />
 
         <p className="text-white text-justify leading-[180%] max-w-md">
-          «دادرس» یک همراه هوشمند و مشاور حقوقی قابل‌اعتماد برای همه است. با این
-          اپلیکیشن، شما می‌توانید در هر زمان و مکان سوالات حقوقی خود را از طریق
-          صفحه چت مطرح کنید و پاسخ‌هایی نسبتا دقیق و مستند به قوانین دریافت
-          کنید. با دادرس، قانون در دستان شماست!
+          سفر وقتی لذت‌بخشه که محل اسکان، امن و مطمئن باشه. اپلیکیشن ما به شما
+          کمک می‌کنه سریع و ساده، بهترین مکان‌های اسکان مسافران در شهر رو پیدا
+          کنید و با اطلاعات شفاف، موقعیت دقیق و انتخاب آگاهانه،  سفرتون رو با
+          آرامش شروع کنید.
         </p>
       </div>
 

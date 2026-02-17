@@ -9,10 +9,10 @@ import "swiper/css/pagination";
 
 export default function Bestskan() {
   const slides = [
-    { image: "/Frame 1418.png", title: "علی علوی" },
-    { image: "/Frame 1418.png", title: "رضا صادقی" },
-    { image: "/Frame 1418.png", title: "علی علوی" },
-    { image: "/Frame 1418.png", title: "رضا صادقی" },
+    { image: "/skan1.jpg", title: "مدرسه رجایی" },
+    { image: "/skan2.jpg", title: "مسجد جمکران" },
+    { image: "/skan3.jpg", title: "حرم مطهر" },
+    { image: "/skan4.jpg", title: "بوستان علوی" },
   ];
 
   return (
@@ -36,10 +36,10 @@ export default function Bestskan() {
         modules={[Pagination, Autoplay]}
       >
         {slides.map((slide, index) => (
-          <SwiperSlide key={index} className="text-center">
+          <SwiperSlide key={index} className="w-[93px] h-[62px] text-center">
             <div className="px-1 -rotate-5 bg-[#BACFF7] rounded-2xl">
               <div className="rotate-5 bg-white text-center rounded-2xl">
-                <img src={slide.image} alt="slide" className="rounded-2xl" />
+                <img src={slide.image} alt="slide" className="rounded-2xl w-full h-[62px]" />
               </div>
             </div>
             <div className="flex justify-center">

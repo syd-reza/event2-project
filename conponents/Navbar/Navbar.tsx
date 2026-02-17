@@ -4,10 +4,10 @@ import React from "react";
 export default function Navbar() {
   const Navbars = [
     { image: "/svg/frame.svg", link:"/dashbord", title: "حساب کاربری" },
-    { image: "/svg/messages-AI.svg", link:"/skanchat", title: "دادچت" },
+    { image: "/svg/messages-AI.svg", link:"/skanchat", title: "چت بات" },
     { image: "/svg/home-2.svg", link:"/homepage", title: "خانه" },
-    { image: "/svg/profile-2user.svg", link:"/skanha", title: "لیست وکلا" },
-    { image: "/svg/document-text.svg", link:"/homepage", title: "مجله" },
+    { image: "/svg/profile-2user.svg", link:"/skanha", title: "لیست اسکان ها" },
+    { image: "/svg/document-text.svg", link:"/masir", title: "نقشه" },
   ];
 
   return (

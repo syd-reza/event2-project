@@ -1,6 +1,9 @@
+"use client"
 import React from "react";
+import { useState } from "react";
 import Pagetitel from "@/conponents/Pagetitel/Pagetitel";
 import Navbar from "@/conponents/Navbar/Navbar";
+import Poupuplogout from "@/conponents/Poupuplogout/Poupuplogout";
 
 export default function page() {
   const dashbordItem = [
@@ -21,6 +24,8 @@ export default function page() {
       icon: "/svg/logout.svg",
     },
   ];
+
+  const [logout, setlogout] = useState(false)
 
   return (
     <div className="container mt-4">
@@ -57,6 +62,11 @@ export default function page() {
       {dashbordItem.map((item, index) => (
         <div
           key={index}
+          onClick={() => {
+            if (item.titel === "خروج از حساب کاربری") {
+              setlogout(true);
+            }
+          }}
           className="px-1 -rotate-1 bg-[#BACFF7] rounded-2xl mt-5"
         >
           <h2 className="flex gap-4 px-4 py-2 rotate-1 bg-white py-3.5 text-center leading-[140%] font-bold text-[#78829d] rounded-2xl shadow-[0px_0px_22.9px_0px_rgba(0,0,0,0.15)]">
@@ -65,6 +75,10 @@ export default function page() {
           </h2>
         </div>
       ))}
+      
+      {logout && <Poupuplogout onClose={() => setlogout(false)} />}
+
+
       <Navbar />
     </div>
   );

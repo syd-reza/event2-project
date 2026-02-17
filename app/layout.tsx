@@ -14,6 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
+      <link rel="icon" href="logo-site.png" type="image/png"></link>
       <body>
         {children}
       </body>
