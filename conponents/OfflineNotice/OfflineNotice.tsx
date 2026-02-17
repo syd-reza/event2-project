@@ -2,19 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-export default function OfflineNotice({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function OfflineNotice({ children }: { children: React.ReactNode }) {
   const [isOnline, setIsOnline] = useState(true);
 
   useEffect(() => {
+    // بررسی وضعیت اولیه
     setIsOnline(navigator.onLine);
 
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
 
+    // اضافه کردن listener برای تغییر لحظه‌ای اینترنت
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
 
@@ -24,16 +22,16 @@ export default function OfflineNotice({
     };
   }, []);
 
-  if (!isOnline) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center p-4">
-        <h1 className="text-2xl font-bold mb-2">
-          اتصال اینترنت شما قطع شده است
-        </h1>
-        <p className="text-lg">لطفاً اتصال خود را به اینترنت بررسی کنید.</p>
-      </div>
-    );
-  }
-
-  return <>{children}</>;
+  return (
+    <div className="min-h-screen">
+      {!isOnline ? (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-red-100 text-red-800 p-4 text-center">
+          <h1 className="text-2xl font-bold mb-2">اتصال اینترنت شما قطع شد!</h1>
+          <p className="text-lg">لطفاً اتصال خود را بررسی کنید.</p>
+        </div>
+      ) : (
+        children
+      )}
+    </div>
+  );
 }

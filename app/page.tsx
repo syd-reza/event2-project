@@ -4,9 +4,7 @@ import OfflineNotice from "@/conponents/OfflineNotice/OfflineNotice";
 export default function Home() {
   return (
     <OfflineNotice>
-      <div>
-        <LoginPage />
-      </div>
+      <LoginPage />
     </OfflineNotice>
   );
 }
