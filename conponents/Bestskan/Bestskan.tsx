@@ -45,7 +45,7 @@ export default function Bestskan() {
             <div className="flex justify-center">
               <div className="inline-flex gap-1 justify-center items-center px-1 rounded-[4px] shadow-[0px_0px_8px_0px_rgba(0,0,0,0.15)] bg-white -translate-y-2.5">
                 <span>۴.۴</span>
-                <img src="/svg/Edit Square.svg" alt="icon" />
+                <img src="/svg/Edit Square.svg" alt="icon2" />
               </div>
             </div>
             <p className="text-sm leading-[180%]">{slide.title}</p>
