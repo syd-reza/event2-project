@@ -93,7 +93,7 @@ export default function Skanchat() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer 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",
           },
           body: JSON.stringify({
             model: "openai/gpt-4o-mini",
