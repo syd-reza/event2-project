@@ -55,31 +55,26 @@ export default function Skanchat() {
   };
 
   const handleClick = async (item: any) => {
-    // اضافه کردن سوال کاربر
     setMessages((prev) => [...prev, { role: "user", text: item.titel }]);
 
-    // حذف سوال از لیست
     setSlides((prev) => prev.filter((slide) => slide.id !== item.id));
 
-    // اگر FAQ جواب دارد، مستقیم تایپ کن
     if (item.answer) {
       setTimeout(() => typeAnswer(item.answer), 300);
       return;
     }
 
-    // در غیر این صورت، سوال را به OpenRouter بفرست
     await askOpenRouter(item.titel);
   };
 
   const handleSendInput = async () => {
     if (!inputValue.trim()) return;
 
-    // اضافه کردن سوال کاربر
+    
     setMessages((prev) => [...prev, { role: "user", text: inputValue }]);
     const question = inputValue;
     setInputValue("");
-
-    // بررسی FAQ
+ 
     const foundFAQ = slides.find((slide) => slide.titel === question);
     if (foundFAQ) {
       typeAnswer(foundFAQ.answer);
@@ -87,7 +82,6 @@ export default function Skanchat() {
       return;
     }
 
-    // ارسال به API
     await askOpenRouter(question);
   };
 
@@ -99,7 +93,7 @@ export default function Skanchat() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer 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",
+            "Authorization": "Bearer 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",
           },
           body: JSON.stringify({
             model: "openai/gpt-4o-mini",

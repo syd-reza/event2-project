@@ -61,8 +61,7 @@ export default function MasirPage() {
     { id: 4, name: "تکیه ی مشهدیا", position: [34.6425, 50.877] },
   ];
 
-  // گرفتن موقعیت واقعی کاربر
-  useEffect(() => {
+    useEffect(() => {
     if (!navigator.geolocation) {
       setError("مرورگر شما از موقعیت مکانی پشتیبانی نمی‌کند.");
       return;
@@ -77,7 +76,6 @@ export default function MasirPage() {
     );
   }, []);
 
-  // گرفتن مسیر واقعی
   const fetchRoute = async (destination: Spot) => {
     if (!userPos) return;
     setSelectedSpot(destination);
@@ -125,7 +123,7 @@ export default function MasirPage() {
 
   return (
     <div className="container rounded-2xl flex flex-col gap-2.5 mt-7">
-      {/* نقشه */}
+      
       <MapContainer
         center={userPos}
         zoom={13}
@@ -133,12 +131,12 @@ export default function MasirPage() {
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-        {/* مارکر موقعیت کاربر */}
+        
         <Marker position={userPos}>
           <Popup>شما اینجا هستید</Popup>
         </Marker>
 
-        {/* مارکرهای گردشگری */}
+        
         {tourismSpots.map((spot) => {
           const isSelected = selectedSpot?.id === spot.id;
 
@@ -167,17 +165,17 @@ export default function MasirPage() {
           );
         })}
 
-        {/* مسیر واقعی */}
+        
         {route.length > 0 && (
           <Polyline positions={route} color="blue" weight={4} />
         )}
 
-        {/* زوم خودکار روی مسیر */}
+        
         {route.length > 0 && selectedSpot && (
           <FitBounds positions={[userPos, selectedSpot.position]} />
         )}
       </MapContainer>
-      {/* لیست مقصدها */}
+      
       <div className="flex flex-col gap-2.5">
         {tourismSpots.map((spot) => (
           <button

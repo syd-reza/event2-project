@@ -17,7 +17,6 @@ export default function LoginPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // شماره همراه فقط اعداد و حداکثر 11 رقم
     if (name === "phone") {
       const numericValue = value.replace(/\D/g, "").slice(0, 11);
       setFormData({ ...formData, [name]: numericValue });
@@ -27,13 +26,11 @@ export default function LoginPage() {
   };
 
   const handleSubmit = () => {
-    // بررسی فیلدهای الزامی
     if (isRegister) {
       if (!formData.fullname || !formData.phone || !formData.password || !formData.email) {
         alert("لطفا تمام فیلدها را پر کنید!");
         return;
       }
-      // اعتبارسنجی ایمیل
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         alert("لطفا یک ایمیل معتبر وارد کنید!");
@@ -45,7 +42,7 @@ export default function LoginPage() {
         return;
       }
     }
-    router.push("/homepage"); // هدایت به صفحه اصلی
+    router.push("/homepage"); 
   };
 
   return (
